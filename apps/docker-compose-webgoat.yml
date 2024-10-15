@@ -1,0 +1,11 @@
+# https://github.com/juice-shop/juice-shop
+services:
+  webgoat:
+    image: webgoat/webgoat
+    container_name: webgoat
+    ports:
+      - "8888:8080"
+      - "9090:9090"
+    restart: always
+    environment:
+      - TZ=America/New_York

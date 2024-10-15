@@ -1,0 +1,8 @@
+# https://github.com/vulnerable-apps/Vulnerable-Flask-App
+services:
+  vulnerable-flask:
+    image: insecureapps/vulnerable-flask-app:latest
+    container_name: vulnerable-flask
+    ports:
+      - "5050:5050"
+    restart: always

@@ -1,0 +1,10 @@
+# https://github.com/vulnerable-apps/vuln_django_play
+services:
+  vuln-django:
+    image: insecureapps/vuln_django:latest
+    environment:
+      - SERVER_PORT=${SERVER_PORT:-8020}
+    ports:
+      - ${SERVER_PORT:-8020}:${SERVER_PORT:-8020}
+    entrypoint:
+      - /opt/app/start-server.sh

@@ -1,0 +1,6 @@
+# https://github.com/vulnerable-apps/vuln_node_express/
+services:
+  vuln_node_express:
+    image: insecureapps/vuln_node_express:latest
+    ports:
+      - 3000:3000

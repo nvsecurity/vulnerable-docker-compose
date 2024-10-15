@@ -1,0 +1,9 @@
+# https://github.com/google/security-crawl-maze
+services:
+  crawlmaze:
+    image: insecureapps/crawlmaze:latest
+    container_name: crawlmaze
+    ports:
+      - "8090:8090"
+    environment:
+      - PORT=8090

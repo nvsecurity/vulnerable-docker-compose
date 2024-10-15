@@ -1,0 +1,26 @@
+# https://github.com/vulnerable-apps/VulnerableApp/
+services:
+    VulnerableApp-base:
+      image: sasanlabs/owasp-vulnerableapp:unreleased
+      restart: always
+
+    VulnerableApp-jsp:
+      image: sasanlabs/owasp-vulnerableapp-jsp:latest
+      restart: always
+
+    VulnerableApp-php:
+      image: sasanlabs/owasp-vulnerableapp-php:latest
+      restart: always
+
+    VulnerableApp:
+      depends_on:
+        - VulnerableApp-base
+        - VulnerableApp-jsp
+        - VulnerableApp-php
+      image: sasanlabs/owasp-vulnerableapp-facade
+      ports:
+       - "80:80"
+      environment:
+       - NGINX_HOST=foobar.com
+       - NGINX_PORT=80
+      restart: always

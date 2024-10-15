@@ -1,0 +1,8 @@
+# https://github.com/vulnerable-apps/Tiredful-API
+services:
+  tiredful:
+    image: insecureapps/tiredful-api:latest
+    container_name: tiredful
+    ports:
+    - 8000:8000
+    restart: always

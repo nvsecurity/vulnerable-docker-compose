@@ -1,0 +1,8 @@
+# https://github.com/vulnerable-apps/dvna
+services:
+  app:
+    image: appsecco/dvna:sqlite
+    platform: linux/amd64
+    container_name: dvna
+    ports:
+      - 9090:9090

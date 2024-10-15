@@ -1,0 +1,8 @@
+# https://github.com/vulnerable-apps/VulnLab
+services:
+  vulnlab:
+    image: insecureapps/vulnlab:latest
+    container_name: vulnlab
+    ports:
+    - 1337:80
+    restart: always

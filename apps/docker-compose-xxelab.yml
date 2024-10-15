@@ -1,0 +1,9 @@
+# https://github.com/vulnerable-apps/xxelab
+services:
+  xxelab:
+    image: insecureapps/xxelab:latest
+    container_name: xxelab
+    platform: linux/amd64
+    ports:
+      - "5000:80"
+    restart: always

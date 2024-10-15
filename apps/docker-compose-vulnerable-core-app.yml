@@ -1,0 +1,7 @@
+# https://github.com/vulnerable-apps/VulnerableCoreApp
+services:
+  vulnerable-core-app:
+    image: insecureapps/vulnerable-core-app:latest
+    container_name: vulnerable-core-app
+    ports:
+    - 5000:80

@@ -1,0 +1,32 @@
+# https://github.com/vulnerable-apps/websitesVulnerableToSSTI
+services:
+  index:
+    container_name: ssti-vuln-index
+    image: insecureapps/vuln-ssti-index:latest
+    ports:
+     - "4000:4000"
+    restart: always
+  go:
+    image: insecureapps/vuln-ssti-go:latest
+    restart: always
+  java:
+    image: insecureapps/vuln-ssti-java:latest
+    restart: always
+  python-flask-based:
+    image: insecureapps/vuln-ssti-python-flask-based:latest
+    restart: always
+  python-tornado:
+    image: insecureapps/vuln-ssti-python-tornado:latest
+    restart: always
+  python-django:
+    image: insecureapps/vuln-ssti-python-django:latest
+    restart: always
+  javascript:
+    image: insecureapps/vuln-ssti-javascript:latest
+    restart: always
+  php:
+    image: insecureapps/vuln-ssti-php:latest
+    restart: always
+  ruby:
+    image: insecureapps/vuln-ssti-ruby:latest
+    restart: always

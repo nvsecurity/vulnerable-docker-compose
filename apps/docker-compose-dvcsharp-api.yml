@@ -1,0 +1,6 @@
+services:
+  dvcsharp-api:
+    image: insecureapps/dvcsharp-api:latest
+    command: ["bash", "-c", "/app/start.sh"]
+    ports:
+      - "5000:5000"

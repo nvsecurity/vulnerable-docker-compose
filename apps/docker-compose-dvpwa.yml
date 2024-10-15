@@ -1,0 +1,22 @@
+# https://github.com/vulnerable-apps/dvpwa
+services:
+  postgres:
+    image: insecureapps/dvpwa-postgres:latest
+    platform: linux/amd64
+    ports:
+      - 5432:5432
+
+  redis:
+    image: redis:alpine
+    platform: linux/amd64
+
+  sqli:
+    image: insecureapps/dvpwa-sqli:latest
+    platform: linux/amd64
+    depends_on:
+      - postgres
+      - redis
+    ports:
+      - 8080:8080
+    command: |
+      wait-for postgres:5432 -- python run.py

@@ -1,0 +1,16 @@
+services:
+  db:
+    image: insecureapps/pixi-datastore:latest
+    container_name: pixidb
+    ports:
+      - "27017:27017"
+      - "28017:28017"
+    expose:
+      - "27017"
+      - "28017"
+
+  app:
+    image: insecureapps/pixi-app:latest
+    ports:
+      - "8000:8000"
+      - "8090:8090"

@@ -1,0 +1,31 @@
+# https://github.com/vulnerable-apps/nodejs-goof
+services:
+  nodejs-goof:
+    image: insecureapps/nodejs-goof:latest
+    container_name: nodejs-goof
+    restart: always
+    environment:
+      - DOCKER=1
+    ports:
+      - "3001:3001"
+      - "9229:9229"
+    links:
+      - goof-mongo
+    depends_on:
+      - goof-mongo
+  goof-mongo:
+    container_name: goof-mongo
+    platform: linux/amd64
+    image: mongo:3
+    ports:
+      - "27017:27017"
+  good-mysql:
+    container_name: goof-mysql
+    image: mysql:5
+    platform: linux/amd64
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: acme
+    ports:
+      - "3306:3306"
