@@ -1,0 +1,85 @@
+version: '3'
+
+services:
+  brokencrystals.api:
+    image: 'insecureapps/brokencrystals-api'
+    restart: always
+    healthcheck:
+      interval: 5s
+      retries: 10
+      test: ["CMD-SHELL", "curl -f http://localhost:3000/api/config"]
+      timeout: 30s
+    environment:
+      DATABASE_HOST: postgres
+      DATABASE_SCHEMA: test
+      DATABASE_USER: '${POSTGRES_USER:-test}'
+      DATABASE_PASSWORD: '${POSTGRES_PASSWORD:-test}'
+      KEYCLOAK_SERVER_URI: http://keycloak:8080/
+    depends_on:
+      - postgres
+      - keycloak
+
+  brokencrystals:
+    image: 'insecureapps/brokencrystals-client'
+    restart: always
+    ports:
+      - '3000:80'
+    depends_on:
+      - brokencrystals.api
+
+  postgres:
+    image: 'insecureapps/brokencrystals-postgres'
+    restart: always
+    command: postgres -c fsync=off -c synchronous_commit=off -c full_page_writes=off -c random_page_cost=1.0
+    environment:
+      POSTGRES_DB: test
+      POSTGRES_PASSWORD: '${POSTGRES_PASSWORD:-test}'
+      POSTGRES_USER: '${POSTGRES_USER:-test}'
+    healthcheck:
+      interval: 10s
+      retries: 10
+      test:
+        [
+          'CMD-SHELL',
+          'pg_isready -d test -U $${POSTGRES_USER}'
+        ]
+      timeout: 45s
+
+  keycloak-db:
+    image: 'postgres:14-alpine'
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_PASSWORD: '${KEYCLOAK_DB_PASSWORD:-test}'
+      POSTGRES_USER: '${KEYCLOAK_DB_USER:-test}'
+    healthcheck:
+      interval: 10s
+      retries: 10
+      test:
+        [
+          'CMD-SHELL',
+          'pg_isready -d keycloak -U $${POSTGRES_USER}'
+        ]
+      timeout: 45s
+    restart: on-failure
+    stdin_open: true
+    tty: true
+
+  keycloak:
+    image: 'insecureapps/brokencrystals-keycloak'
+    command: start-dev --import-realm
+    environment:
+      DB_VENDOR: postgres
+      DB_ADDR: keycloak-db
+      DB_DATABASE: keycloak
+      DB_SCHEMA: public
+      DB_PASSWORD: '${KEYCLOAK_DB_PASSWORD:-test}'
+      DB_USER: '${KEYCLOAK_DB_USER:-test}'
+      KEYCLOAK_ADMIN: '${KEYCLOAK_USER:-admin}'
+      KEYCLOAK_ADMIN_PASSWORD: '${KEYCLOAK_PASSWORD:-admin}'
+    healthcheck:
+      test: [ 'CMD', 'curl', '-f', 'http://localhost:8080/realms/master' ]
+      timeout: 10s
+      interval: 30s
+      retries: 3
+    depends_on:
+      - keycloak-db
