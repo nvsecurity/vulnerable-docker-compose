@@ -1,0 +1,9 @@
+# https://github.com/vulnerable-apps/simple-ssrf
+
+services:
+  api:
+    image: insecureapps/simple-ssrf:latest
+    ports:
+      - "8000:8000"
+    environment:
+      - WORKER_COUNT=4
